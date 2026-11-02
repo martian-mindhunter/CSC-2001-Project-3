@@ -33,6 +33,19 @@ public class HuffmanTest {
     }
 
     @Test
+    public void testComesBeforeNode(){
+//        HuffmanNode d = new HuffmanNode()
+        // TODO: TEST HUFFMAN NODE
+    }
+
+    @Test
+    public void testCombine(){
+        HuffmanLeaf d = new HuffmanLeaf(5, 'd');
+        HuffmanLeaf k = new HuffmanLeaf(5, 'k');
+        assertEquals(d.combine(k), new HuffmanNode(0,0,d,k));
+    }
+
+    @Test
     public void testCreateHeader() throws IOException {
         int[] freqList = Huffman.cntFreq("file2.txt");
         assertEquals("97 2 98 4 99 8 100 16 102 2", Huffman.createHeader(freqList));

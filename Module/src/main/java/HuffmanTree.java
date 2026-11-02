@@ -28,4 +28,24 @@ public interface HuffmanTree extends Comparable<HuffmanTree> {
     @Override
     public int compareTo(HuffmanTree other);
 
+    // Method used in HuffmanNode & HuffmanLeaf to get freq based on type
+    public static int frequency(HuffmanTree tree){
+        if(tree instanceof HuffmanNode node){
+            return node.freq();
+        } else {
+            return ((HuffmanLeaf)tree).freq();
+        }
     }
+
+    // Used in HuffmanNode & HuffmanLeaf to get ascii val based on obj type
+    public static int ascii(HuffmanTree tree){
+        if(tree instanceof HuffmanNode node){
+            return node.charAscii();
+        } else {
+            return ((HuffmanLeaf)tree).tieBreak();
+        }
+    }
+    // ok i'm writing this here rn bc there's this couple in front of me in the cafe
+    // just sucking face at their table like this is outrageous it's actually vile
+    // like good for them but jesus christ oh my god i think there's tongue wtf
+}

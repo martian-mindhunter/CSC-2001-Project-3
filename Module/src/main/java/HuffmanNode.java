@@ -14,11 +14,33 @@ public record HuffmanNode(int charAscii, int freq, HuffmanTree left, HuffmanTree
 
      public boolean comesBefore(HuffmanTree other) {
         // TODO: implement
+         int otherFreq = HuffmanTree.frequency(other);
+         int otherAscii = HuffmanTree.ascii(other);
+
+         if(this.freq() != otherFreq){
+             return this.freq() < otherFreq;
+         } else if(this.freq() == otherFreq){
+             return this.charAscii() < otherAscii;
+         }
+
         return false;
     }
 
     public HuffmanTree combine(HuffmanTree other) {
         // TODO: implement
+        int totalFreq = this.freq() + HuffmanTree.frequency(other);
+        int totalAscii;
+        if(this.charAscii < HuffmanTree.ascii(other)){
+            totalAscii = this.charAscii;
+        } else {
+            totalAscii = HuffmanTree.ascii(other);
+        }
+
+        if(this.comesBefore(other)){
+            return new HuffmanNode(totalAscii, totalFreq, this, other);
+        } else if(other.comesBefore(this)){
+            return new HuffmanNode(totalAscii, totalFreq, other, this);
+        }
         return null;
     }
 

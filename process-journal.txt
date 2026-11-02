@@ -3,3 +3,10 @@
 Set up project repo
 Assigned work for each member based on modules
 Created process-journal.txt
+
+2026-11-02 02:00-3:30PM
+~~~~~~~~~~~~~~~~~~~~~~~
+Created frequency() & ascii() methods in HuffmanTree.java to make
+  freq & ascii comparison method shared b/w HuffmanNode & HuffmanLeaf.
+Created comesBefore method for HuffmanNode & HuffmanLeaf.
+Created combine method for HuffmanNode & HuffmanLeaf.
