@@ -32,6 +32,7 @@ public class Huffman {
      * Returns an int array of size NUM_CHARS, indexed by ASCII value, with
      * the count of each character (0 for characters that do not occur).
      */
+
     public static int[] cntFreq(String filename) throws IOException {
         int[] freq = new int[NUM_CHARS];
         // TODO: implement
@@ -116,9 +117,28 @@ public class Huffman {
     public static String[] createCode(HuffmanTree root) {
         String[] codes = new String[NUM_CHARS];
         Arrays.fill(codes, "");
-        // TODO: implement
+        fillCodes(root, "", codes);
         return codes;
     }
+
+     //This takes a subtree, the path to it, and the code array
+     //It stores each leaf's code in the array and doesn't return anything
+     private static void fillCodes(HuffmanTree root, String code,
+                                   String[] codes) {
+         if (root == null) {
+             return;
+         }
+
+         if (root instanceof HuffmanLeaf) {
+             codes[HuffmanTree.ascii(root)] = code;
+             return;
+         }
+
+         HuffmanNode node = (HuffmanNode) root;
+
+         fillCodes(node.left(), code + "0", codes);
+         fillCodes(node.right(), code + "1", codes);
+     }
 
     /**
      * Given a frequency array (as produced by cntFreq()), returns a

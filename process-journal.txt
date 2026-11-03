@@ -17,3 +17,14 @@ Created the createHuffTree function in Huffman.java
 createHuffTree uses an Ordered List bc keeping the smallest tree
   at trees[0] is easy to use with an insertion sort method compared
   to a priority queue
+
+2026-11-02 9:00-10:30
+~~~~~~~~~~~~~~~~~~~~~~~
+Created the createCode method in Huffman.java
+createCode takes in a HuffmanTree root and returns a chars number table
+    and if there are missing characters, then it returns an empty code and
+    same if there is only 1 root leaf.
+
+Created a helper method for createCode called fillCodes in Huffman.java
+fillCodes stores each code for each leaf in the code table that was made
+    in createCode. It does not return anything.
