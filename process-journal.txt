@@ -28,3 +28,10 @@ createCode takes in a HuffmanTree root and returns a chars number table
 Created a helper method for createCode called fillCodes in Huffman.java
 fillCodes stores each code for each leaf in the code table that was made
     in createCode. It does not return anything.
+
+2026-11-03 12:30-1:30
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Created the cntFreq method which returns a table of the characters
+and their occurences based on index value. It takes in a string called filename.
+
+

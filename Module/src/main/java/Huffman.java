@@ -33,9 +33,20 @@ public class Huffman {
      * the count of each character (0 for characters that do not occur).
      */
 
+    //Counts each character's occurrences and returns an array
+    // indexed by character value, and it gives an IOException if the file isn't opened or read
     public static int[] cntFreq(String filename) throws IOException {
         int[] freq = new int[NUM_CHARS];
-        // TODO: implement
+        FileInputStream input = new FileInputStream(filename);
+
+        int character = input.read();
+
+        while (character != -1) {
+            freq[character] += 1;
+            character = input.read();
+        }
+
+        input.close();
         return freq;
     }
 
@@ -123,21 +134,16 @@ public class Huffman {
 
      //This takes a subtree, the path to it, and the code array
      //It stores each leaf's code in the array and doesn't return anything
-     private static void fillCodes(HuffmanTree root, String code,
-                                   String[] codes) {
-         if (root == null) {
-             return;
-         }
-
+     private static void fillCodes(HuffmanTree root, String code, String[] codes) {
          if (root instanceof HuffmanLeaf) {
              codes[HuffmanTree.ascii(root)] = code;
-             return;
          }
+         else if (root instanceof HuffmanNode) {
+             HuffmanNode node = (HuffmanNode) root;
 
-         HuffmanNode node = (HuffmanNode) root;
-
-         fillCodes(node.left(), code + "0", codes);
-         fillCodes(node.right(), code + "1", codes);
+             fillCodes(node.left(), code + "0", codes);
+             fillCodes(node.right(), code + "1", codes);
+         }
      }
 
     /**
