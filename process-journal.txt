@@ -10,3 +10,10 @@ Created frequency() & ascii() methods in HuffmanTree.java to make
   freq & ascii comparison method shared b/w HuffmanNode & HuffmanLeaf.
 Created comesBefore method for HuffmanNode & HuffmanLeaf.
 Created combine method for HuffmanNode & HuffmanLeaf.
+
+2026-11-02 3:30-5:00PM
+~~~~~~~~~~~~~~~~~~~~~~
+Created the createHuffTree function in Huffman.java
+createHuffTree uses an Ordered List bc keeping the smallest tree
+  at trees[0] is easy to use with an insertion sort method compared
+  to a priority queue
