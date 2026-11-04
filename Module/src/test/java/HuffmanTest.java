@@ -17,7 +17,7 @@ public class HuffmanTest {
 
     @Test
     public void testCntFreq() throws IOException {
-        int[] freqList = Huffman.cntFreq("file2.txt");
+        int[] freqList = Huffman.cntFreq("src/test/java/file2.txt");
         int[] ansList = {2, 4, 8, 16, 0, 2, 0}; // counts for ascii 97..103
         for (int i = 0; i < ansList.length; i++) {
             assertEquals(ansList[i], freqList[97 + i], "mismatch at ascii " + (97 + i));

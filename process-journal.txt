@@ -34,4 +34,6 @@ fillCodes stores each code for each leaf in the code table that was made
 Created the cntFreq method which returns a table of the characters
 and their occurences based on index value. It takes in a string called filename.
 
-
+2026-11-03 4:45-5:20
+~~~~~~~~~~~~~~~~~~~~
+Fixed the cntFreq test to find the correct test txt file directory
