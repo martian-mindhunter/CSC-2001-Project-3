@@ -47,14 +47,29 @@ public class HuffmanTest {
 
     @Test
     public void testCreateHeader() throws IOException {
-        int[] freqList = Huffman.cntFreq("file2.txt");
+        int[] freqList = Huffman.cntFreq("src/test/java/file2.txt");
         assertEquals("97 2 98 4 99 8 100 16 102 2", Huffman.createHeader(freqList));
     }
 
     @Test
     public void test01Textfile() throws IOException {
-        Huffman.huffmanEncode("file1.txt", "file1_out.txt");
-        assertTrue(compareFiles("file1_out.txt", "file1_soln.txt"));
+        Huffman.huffmanEncode("src/test/java/file1.txt", "src/test/java/file1_out.txt");
+        assertTrue(compareFiles("src/test/java/file1_out.txt", "src/test/java/file1_soln.txt"));
+    }
+    @Test
+    public void test02Textfile() throws IOException {
+        Huffman.huffmanEncode("src/test/java/file2.txt", "src/test/java/file2_out.txt");
+        assertTrue(compareFiles("src/test/java/file2_out.txt", "src/test/java/file2_soln.txt"));
+    }
+    @Test
+    public void testMultiTextfile() throws IOException {
+        Huffman.huffmanEncode("src/test/java/multiline.txt", "src/test/java/multiline_out.txt");
+        assertTrue(compareFiles("src/test/java/multiline_out.txt", "src/test/java/multiline_soln.txt"));
+    }
+    @Test
+    public void testOneCharTextFile() throws IOException {
+        Huffman.huffmanEncode("src/test/java/onechar.txt", "src/test/java/onechar_out.txt");
+        assertTrue(compareFiles("src/test/java/onechar_out.txt", "src/test/java/onechar_soln.txt"));
     }
 
     /**

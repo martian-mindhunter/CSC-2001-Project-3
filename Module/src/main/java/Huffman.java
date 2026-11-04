@@ -141,6 +141,11 @@ public class Huffman {
          else if (root instanceof HuffmanNode) {
              HuffmanNode node = (HuffmanNode) root;
 
+             if(node.left() == null && node.right() == null){
+
+                 codes[node.charAscii()] = code;
+                 return;
+             }
              fillCodes(node.left(), code + "0", codes);
              fillCodes(node.right(), code + "1", codes);
          }
@@ -155,8 +160,19 @@ public class Huffman {
      * Example: for the text "aaabbbbcc" this returns "97 3 98 4 99 2".
      */
     public static String createHeader(int[] freq) {
-        // TODO: implement
-        return "";
+
+        String asciiString = "";
+
+        for(int ascii = 0; ascii < 256; ascii++){
+            if(freq[ascii] > 0){
+                if(!asciiString.equals("")){
+                    asciiString += " ";
+                }
+                asciiString += ascii + " " + freq[ascii];
+            }
+        }
+
+        return asciiString;
     }
 
     /**
@@ -173,7 +189,30 @@ public class Huffman {
      *    header line (e.g. "97 5") and nothing else - no second line of code bits.
      */
     public static void huffmanEncode(String inFile, String outFile) throws IOException {
-        // TODO: implement
+
+        int[] cntFreq = cntFreq(inFile);
+        HuffmanTree root = createHuffTree(cntFreq(inFile));
+
+        try(FileWriter output = new FileWriter(outFile)){
+            if(root == null){
+                return;
+            }
+
+            String headerLine = createHeader(cntFreq);
+            output.write(headerLine);
+            output.write("\n");
+            String[] codes = createCode(root);
+
+            try(FileInputStream input = new FileInputStream(inFile)){
+                int character = input.read();
+                while(character != -1){
+//                    System.out.println(codes[character]);
+                    output.write(codes[character]);
+//                    output.write(codes[0]);
+                    character = input.read();
+                }
+            }
+        }
     }
 
     /**
