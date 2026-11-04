@@ -37,3 +37,9 @@ and their occurences based on index value. It takes in a string called filename.
 2026-11-03 4:45-5:20
 ~~~~~~~~~~~~~~~~~~~~
 Fixed the cntFreq test to find the correct test txt file directory
+
+2026-11-03 8:25-10:39
+~~~~~~~~~~~~~~~~~~~~~
+Completed createHeader method that returns translated ascii decimal and frequency of chars
+Completed huffmanEncode method that takes text input and outputs decimal, frequency, and binary code
+Had to fix fillCodes to store the code for the given character in order to create binary line for huffmanEncode
