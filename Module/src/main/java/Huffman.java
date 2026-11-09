@@ -296,7 +296,7 @@ public class Huffman {
                     else{
                         current = node.right();
                     }
-                    if (current instanceof HuffmanNode && ((HuffmanNode) current).left() == null && ((HuffmanNode) current).right() == null){
+                    if (current instanceof HuffmanNode && ((HuffmanNode)current).left() == null && ((HuffmanNode)current).right() == null){
                         output.write(HuffmanTree.ascii(current));
                         current = root;
                     }
