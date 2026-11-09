@@ -1,8 +1,9 @@
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,127 @@ public class HuffmanTest {
         for (int i = 0; i < ansList.length; i++) {
             assertEquals(ansList[i], freqList[97 + i], "mismatch at ascii " + (97 + i));
         }
+    }
+    @Test
+    public void testCreateCode(){
+        String[] codes = Huffman.createCode(null);
+
+        assertEquals(256, codes.length);
+
+        for (int i = 0; i < codes.length; i++) {
+            assertEquals("", codes[i]);
+        }
+
+        codes = Huffman.createCode(new HuffmanLeaf(5, 'a'));
+        assertEquals("", codes['a']);
+    }
+
+    @Test
+    public void testfillCodes(){
+        String[] codes = new String[256];
+        java.util.Arrays.fill(codes, "");
+
+        // test for empty tree
+        Huffman.fillCodes(null, "", codes);
+
+        for (int i = 0; i < codes.length; i++) {
+            assertEquals("", codes[i]);
+        }
+
+        // test for single character
+        Huffman.fillCodes(new HuffmanLeaf(5, 'a'), "", codes);
+        assertEquals("", codes['a']);
+
+        // test for two characters
+        HuffmanTree a = new HuffmanLeaf(1, 'a');
+        HuffmanTree b = new HuffmanLeaf(2, 'b');
+        HuffmanTree pair = new HuffmanNode(97, 3, a, b);
+
+        Huffman.fillCodes(pair, "", codes);
+        assertEquals("1", codes['b']);
+        assertEquals("", codes['c']);
+
+        // test when multiple levels
+        HuffmanTree c = new HuffmanLeaf(4, 'c');
+        HuffmanTree root = new HuffmanNode(97, 7, pair, c);
+
+        Huffman.fillCodes(root, "", codes);
+        assertEquals("01", codes['b']);
+        assertEquals("1", codes['c']);
+        assertEquals("", codes['d']);
+    }
+
+    @Test
+    public void testparseHeader(){
+        // Empty header
+        assertArrayEquals(new int[256], Huffman.parseHeader(""));
+
+        // Single character
+        int[] expected = new int[256];
+        expected[97] = 5;
+        assertArrayEquals(expected, Huffman.parseHeader("97 5"));
+
+        // Multiple characters, including newline and space
+        expected = new int[256];
+        expected[10] = 2;
+        expected[32] = 6;
+        expected[97] = 3;
+        expected[98] = 4;
+        expected[255] = 1;
+
+        assertEquals(expected, Huffman.parseHeader("10 2 32 6 97 3 98 4 255 1"));
+    }
+
+    @Test
+    public void testHuffmanDecode() throws IOException {
+        // Multiple characters
+        FileOutputStream file = new FileOutputStream("decode_test_input.txt");
+        String text = "97 3 98 2\n11100";
+
+        for (int i = 0; i < text.length(); i++) {
+            file.write(text.charAt(i));
+        }
+        file.close();
+
+        Huffman.huffmanDecode("decode_test_input.txt", "decode_test_output.txt");
+
+        FileInputStream input = new FileInputStream("decode_test_output.txt");
+        String expected = "aaabb";
+
+        for (int i = 0; i < expected.length(); i++) {
+            assertEquals((int) expected.charAt(i), input.read());
+        }
+        assertEquals(-1, input.read());
+        input.close();
+
+        // Single character; replaces previous output
+        file = new FileOutputStream("decode_test_input.txt");
+        text = "97 5\n";
+
+        for (int i = 0; i < text.length(); i++) {
+            file.write(text.charAt(i));
+        }
+        file.close();
+
+        Huffman.huffmanDecode("decode_test_input.txt", "decode_test_output.txt");
+
+        input = new FileInputStream("decode_test_output.txt");
+
+        for (int i = 0; i < 5; i++) {
+            assertEquals((int) 'a', input.read());
+        }
+        assertEquals(-1, input.read());
+        input.close();
+
+        // Empty the file and clear previous output
+        file = new FileOutputStream("decode_test_input.txt");
+        file.close();
+
+        Huffman.huffmanDecode("decode_test_input.txt", "decode_test_output.txt");
+
+        input = new FileInputStream("decode_test_output.txt");
+        assertEquals(-1, input.read());
+        input.close();
     }
 
     @Test
@@ -71,6 +193,7 @@ public class HuffmanTest {
         Huffman.huffmanEncode("src/test/java/onechar.txt", "src/test/java/onechar_out.txt");
         assertTrue(compareFiles("src/test/java/onechar_out.txt", "src/test/java/onechar_soln.txt"));
     }
+
 
     /**
      * Compares two files line by line, trimming trailing CR/LF so the

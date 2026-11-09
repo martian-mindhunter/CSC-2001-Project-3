@@ -53,3 +53,12 @@ Completed huffmanDecode method that reads the header and uses parseHeader and cr
 The method follows the encoded bits, moving left for 0 and right for 1. Each time it reaches a leaf, it writes that
 character to the output file and starts again at the root. Also handled empty files and single-character files,
 where the character and number of repetitions come entirely from the header.
+
+2026-11-06 8:30 - 10:30
+~~~~~~~~~~~~~~~~~~~~~~~
+Wrote the test cases for createCode and fillCode. Checked various different scenarios.
+Also began writing the tests for cntFreq and parseHeader and Huffman Decode
+
+2026-11-08 8:30 - 11:00
+~~~~~~~~~~~~~~~~~~~~~~~~
+Finished the test cases for cntFreq, parseHeader, and huffmanDecode

@@ -13,7 +13,7 @@ public record HuffmanNode(int charAscii, int freq, HuffmanTree left, HuffmanTree
         implements HuffmanTree{
 
      public boolean comesBefore(HuffmanTree other) {
-        // TODO: implement
+
          int otherFreq = HuffmanTree.frequency(other);
          int otherAscii = HuffmanTree.ascii(other);
 
@@ -27,7 +27,7 @@ public record HuffmanNode(int charAscii, int freq, HuffmanTree left, HuffmanTree
     }
 
     public HuffmanTree combine(HuffmanTree other) {
-        // TODO: implement
+
         int totalFreq = this.freq() + HuffmanTree.frequency(other);
         int totalAscii;
         if(this.charAscii < HuffmanTree.ascii(other)){

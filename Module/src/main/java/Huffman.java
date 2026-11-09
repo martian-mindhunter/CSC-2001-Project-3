@@ -136,7 +136,7 @@ public class Huffman {
 
     //This takes a subtree, the path to it, and the code array
     //It stores each leaf's code in the array and doesn't return anything
-    private static void fillCodes(HuffmanTree root, String code, String[] codes) {
+    static void fillCodes(HuffmanTree root, String code, String[] codes) {
         if (root instanceof HuffmanLeaf) {
             codes[HuffmanTree.ascii(root)] = code;
         } else if (root instanceof HuffmanNode) {
@@ -274,7 +274,7 @@ public class Huffman {
 
         FileOutputStream output = new FileOutputStream(decodeFile);
 
-        if(root instanceof HuffmanLeaf){
+        if (root instanceof HuffmanNode && ((HuffmanNode) root).left() == null && ((HuffmanNode) root).right() == null) {
             int ascii = HuffmanTree.ascii(root);
             int count = HuffmanTree.frequency(root);
 
@@ -296,7 +296,7 @@ public class Huffman {
                     else{
                         current = node.right();
                     }
-                    if(current instanceof HuffmanLeaf){
+                    if (current instanceof HuffmanNode && ((HuffmanNode) current).left() == null && ((HuffmanNode) current).right() == null){
                         output.write(HuffmanTree.ascii(current));
                         current = root;
                     }
