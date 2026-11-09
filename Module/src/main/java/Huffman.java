@@ -265,7 +265,7 @@ public class Huffman {
 
         // Read the header until a newline or the end of the file.
         while (character != '\n' && character != -1) {
-            header += (char) character;
+            header += (char)character;
             character = input.read();
         }
 
