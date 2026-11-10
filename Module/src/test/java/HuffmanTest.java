@@ -91,7 +91,7 @@ public class HuffmanTest {
         expected[98] = 4;
         expected[255] = 1;
 
-        assertEquals(expected, Huffman.parseHeader("10 2 32 6 97 3 98 4 255 1"));
+        assertArrayEquals(expected, Huffman.parseHeader("10 2 32 6 97 3 98 4 255 1"));
     }
 
     @Test
@@ -152,19 +152,64 @@ public class HuffmanTest {
         HuffmanLeaf k = new HuffmanLeaf(5, 'k');
         assertTrue(d.comesBefore(k));
         assertFalse(k.comesBefore(d));
+
+        HuffmanLeaf a1 = new HuffmanLeaf(5, 'a');
+        HuffmanLeaf a2 = new HuffmanLeaf(5, 'a');
+        assertFalse(a1.comesBefore(a2));
+        assertFalse(a2.comesBefore(a1));
     }
 
     @Test
     public void testComesBeforeNode(){
-//        HuffmanNode d = new HuffmanNode()
-        // TODO: TEST HUFFMAN NODE
+        HuffmanNode d = new HuffmanNode(100,5,null,null);
+        HuffmanNode k = new HuffmanNode(107,5,null,null);
+        assertTrue(d.comesBefore(k));
+        assertFalse(k.comesBefore(d));
+
+        HuffmanNode a1 = new HuffmanNode(97, 5, null,null);
+        HuffmanNode a2 = new HuffmanNode(97, 5, null,null);
+        assertFalse(a1.comesBefore(a2));
+        assertFalse(a2.comesBefore(a1));
     }
 
     @Test
     public void testCombine(){
         HuffmanLeaf d = new HuffmanLeaf(5, 'd');
         HuffmanLeaf k = new HuffmanLeaf(5, 'k');
-        assertEquals(d.combine(k), new HuffmanNode(0,0,d,k));
+        assertEquals(new HuffmanNode(100,10,d,k), d.combine(k));
+
+        HuffmanNode a1 = new HuffmanNode(97,5,null,null);
+        HuffmanNode a2 = new HuffmanNode(97,5,null,null);
+        assertEquals(a1.combine(a2), null);
+
+        HuffmanNode b = new HuffmanNode(98,10,null,null);
+        HuffmanNode c = new HuffmanNode(99, 1, null,null);
+        assertEquals(new HuffmanNode(98,11, c, b), b.combine(c));
+    }
+
+    @Test
+    public void testCreateHuffTree(){
+        int[] freq = new int[256];
+        freq['a'] = 2;
+        freq['b'] = 4;
+        freq['c'] = 8;
+        freq['d'] = 16;
+        freq['f'] = 2;
+
+        HuffmanNode a = new HuffmanNode('a', 2, null, null);
+        HuffmanNode f = new HuffmanNode('f', 2, null, null);
+        HuffmanNode b = new HuffmanNode('b', 4, null, null);
+        HuffmanNode c = new HuffmanNode('c', 8, null, null);
+        HuffmanNode d = new HuffmanNode('d', 16, null, null);
+
+        HuffmanNode af = new HuffmanNode('a', 4, a, f);
+        HuffmanNode afb = new HuffmanNode('a', 8, af, b);
+        HuffmanNode afbc = new HuffmanNode('a', 16, afb, c);
+        HuffmanNode expectedTree = new HuffmanNode('a', 32, afbc, d);
+
+        HuffmanNode actualTree = Huffman.createHuffTree(freq);
+
+        assertEquals(expectedTree, actualTree);
     }
 
     @Test
@@ -192,6 +237,12 @@ public class HuffmanTest {
     public void testOneCharTextFile() throws IOException {
         Huffman.huffmanEncode("src/test/java/onechar.txt", "src/test/java/onechar_out.txt");
         assertTrue(compareFiles("src/test/java/onechar_out.txt", "src/test/java/onechar_soln.txt"));
+    }
+    @Test
+    public void testFileNotFound() throws IOException {
+        assertThrows(IOException.class, () ->{
+            Huffman.huffmanEncode("doesnotexist.txt", "doesnotexist_out.txt");
+        });
     }
 
 

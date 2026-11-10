@@ -62,3 +62,7 @@ Also began writing the tests for cntFreq and parseHeader and Huffman Decode
 2026-11-08 8:30 - 11:00
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Finished the test cases for cntFreq, parseHeader, and huffmanDecode
+
+2026-11-09 2:03 - 4:38
+~~~~~~~~~~~~~~~~~~~~~~
+Finished test cases for comesBefore, comesBeforeNode, combine, createHuffTree, and huffmanEncode
